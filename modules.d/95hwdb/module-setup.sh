@@ -12,5 +12,6 @@ install() {
     if [[ $hostonly ]]; then
         inst_multiple -H -o \
             "$udevconfdir"/hwdb.bin
+
     fi
 }
