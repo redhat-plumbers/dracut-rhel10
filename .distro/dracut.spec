@@ -6,12 +6,9 @@
 # directory.
 %global __requires_exclude pkg-config
 
-# rpmdev-bumpspec and releng automation compatible variable
-%global baserelease 22
-
 Name: dracut
-Version: 059
-Release: %{baserelease}%{?dist}
+Version: 060
+Release: 1%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -20,11 +17,15 @@ Summary: Initramfs generator using udev
 # except util/* which is GPLv2
 License: GPL-2.0-or-later AND LGPL-2.1-or-later AND GPL-2.0-only
 
-URL: https://github.com/dracutdevs/dracut/wiki/
+URL: https://github.com/dracut-ng/dracut-ng/wiki/
 
-Source0: https://github.com/dracutdevs/dracut/archive/refs/tags/%{version}.tar.gz
+Source0: https://github.com/dracut-ng/dracut-ng/archive/refs/tags/%{version}.tar.gz
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
+
+# Please use source-git to work with this spec file:
+# HowTo: https://packit.dev/source-git/work-with-source-git
+# Source-git repository: https://github.com/redhat-plumbers/dracut-fedora/
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -150,7 +151,7 @@ in a squashfs image, result in a smaller initramfs size and reduce runtime memor
 usage.
 
 %prep
-%autosetup -n %{name}-%{version} -S git_am
+%autosetup -n %{name}-ng-%{version} -S git_am
 cp %{SOURCE1} .
 
 %build
@@ -169,10 +170,6 @@ cp %{SOURCE1} .
      libdir=%{_prefix}/lib
 
 echo "DRACUT_VERSION=%{version}-%{release}" > $RPM_BUILD_ROOT/%{dracutlibdir}/dracut-version.sh
-
-%if 0%{?fedora} == 0 && 0%{?rhel} == 0 && 0%{?suse_version} == 0
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/01fips
-%endif
 
 # we do not support dash in the initramfs
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00dash
@@ -203,6 +200,7 @@ rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00warpclock
 mkdir -p $RPM_BUILD_ROOT/boot/dracut
 mkdir -p $RPM_BUILD_ROOT/var/lib/dracut/overlay
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log
+touch $RPM_BUILD_ROOT%{_localstatedir}/log/dracut.log
 mkdir -p $RPM_BUILD_ROOT%{_sharedstatedir}/initramfs
 
 install -m 0644 dracut.conf.d/fedora.conf.example $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/01-dist.conf
@@ -259,6 +257,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/01systemd-ac-power
 %{dracutlibdir}/modules.d/01systemd-ask-password
 %{dracutlibdir}/modules.d/01systemd-coredump
+%{dracutlibdir}/modules.d/01systemd-creds
 %{dracutlibdir}/modules.d/01systemd-hostnamed
 %{dracutlibdir}/modules.d/01systemd-initrd
 %{dracutlibdir}/modules.d/01systemd-integritysetup
@@ -270,7 +269,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/01systemd-pstore
 %{dracutlibdir}/modules.d/01systemd-repart
 %{dracutlibdir}/modules.d/01systemd-resolved
-%{dracutlibdir}/modules.d/01systemd-rfkill
 %{dracutlibdir}/modules.d/01systemd-sysext
 %{dracutlibdir}/modules.d/01systemd-sysctl
 %{dracutlibdir}/modules.d/01systemd-sysusers
@@ -353,6 +351,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/99memstrack
 %{dracutlibdir}/modules.d/99fs-lib
 %{dracutlibdir}/modules.d/99shutdown
+%attr(0644,root,root) %ghost %config(missingok,noreplace) %{_localstatedir}/log/dracut.log
 %dir %{_sharedstatedir}/initramfs
 %if %{defined _unitdir}
 %{_unitdir}/dracut-shutdown.service
@@ -379,7 +378,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/01systemd-networkd
 %{dracutlibdir}/modules.d/35connman
 %{dracutlibdir}/modules.d/35network-manager
-%{dracutlibdir}/modules.d/35network-wicked
 %{dracutlibdir}/modules.d/40network
 %{dracutlibdir}/modules.d/45ifcfg
 %{dracutlibdir}/modules.d/90kernel-network-modules
@@ -428,6 +426,13 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Fri Apr 26 2024 Adam Williamson <awilliam@redhat.com> - 060-2
+- Backport fix to pull in required libs for systemd (dracut-ng PR #118)
+- Backport fix to move hook directory for systemd (dracut-ng PR #194)
+
+* Wed Mar 20 2024 Pavel Valena <pvalena@redhat.com> - 060-1
+- Update to dracut 060.
+
 * Mon Feb 12 2024 Pavel Valena <pvalena@redhat.com> - 059-22
 - Remove network-legacy module.
 

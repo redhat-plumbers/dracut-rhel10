@@ -1,9 +1,11 @@
-upstream_project_url: git@github.com:pvalena/dracut-fedora.git
+upstream_project_url: git@github.com:dracut-ng/dracut-ng.git
 upstream_ref: 856e7acdb1462803c2517c8d64afb2e34c73c735
 downstream_package_name: dracut
 specfile_path: .distro/dracut.spec
 patch_generation_ignore_paths:
-- .distro
+- .distro/
+- .packit.yml
+- .github/
 patch_generation_patch_id_digits: 1
 sync_changelog: true
 files_to_sync:
@@ -16,5 +18,5 @@ files_to_sync:
   - exclude source-git.yaml
   - exclude .gitignore
 sources:
-- path: 059.tar.gz
-  url: https://src.fedoraproject.org/repo/pkgs/rpms/dracut/059.tar.gz/sha512/196bc8bf18703c72bffb51a7e0493719c58173ad2da7d121eb42f9a8de47e953af36d109214dc4a10b2dc2d3bd19e844f7f51c2bdec087e064ea11f75124032d/059.tar.gz
+- path: dracut-ng-060.tar.gz
+  url: https://github.com/dracut-ng/dracut-ng/archive/refs/tags/060.tar.gz
