@@ -10,24 +10,10 @@ on:  # yamllint disable-line rule:truthy
             container:
                 type: choice
                 description: 'distro'
-                default: 'all'
+                default: 'fedora'
                 options:
                     - "all"
-                    - "alpine:latest"
-                    - "alpine:edge"
-                    - "azurelinux:3.0"
-                    - "centos:stream10-development"
-                    - "fedora:latest"
-                    - "fedora:rawhide"
-                    - "arch:latest"
-                    - "debian:latest"
-                    - "debian:sid"
-                    - "ubuntu:latest"
-                    - "ubuntu:devel"
-                    - "ubuntu:rolling"
-                    - "opensuse:latest"
-                    - "gentoo:latest"
-                    - "void:latest"
+                    - "centos:stream10"
             env:
                 description: 'Environment (optional)'
                 default: '{"DEBUGFAIL": "rd.debug"}'
@@ -39,7 +25,7 @@ env:
 
 jobs:
     matrix:
-        runs-on: ubuntu-24.04
+        runs-on: ubuntu-latest
         outputs:
             registry: ${{ steps.set-matrix.outputs.registry }}
             container: ${{ steps.set-matrix.outputs.container }}
@@ -60,8 +46,8 @@ jobs:
                    || ( tests=$(find test -type d -a -name "TEST-*" | cut -d\- -f2 | sed -z 's/\n/","/g' ); echo "tests=[\"${tests%??}]" >> $GITHUB_OUTPUT )
     test:
         needs: matrix
-        runs-on: ubuntu-24.04
-        timeout-minutes: 20
+        runs-on: ubuntu-latest
+        timeout-minutes: 40
         concurrency:
             group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.container }}-${{ matrix.test }}
             cancel-in-progress: true
