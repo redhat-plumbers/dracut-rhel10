@@ -76,6 +76,8 @@ jobs:
         timeout-minutes: 45
         concurrency:
             group: dracut-cpio-${{ github.workflow }}-${{ github.ref }}-${{ matrix.container }}-${{ matrix.test }}
+
+
             cancel-in-progress: true
         strategy:
             fail-fast: false
@@ -84,7 +86,12 @@ jobs:
                         "fedora",
                 ]
                 test: [
-                        "63",
+                        "20",
+                        "30",
+                        "35",
+                        "40",
+                        "50",
+                        "60",
                 ]
         container:
             image: ghcr.io/${{ github.repository_owner }}/${{ matrix.container }}
@@ -92,8 +99,11 @@ jobs:
         steps:
             -   name: "Checkout Repository"
                 uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+
             -   name: "${{ matrix.container }} TEST-${{ matrix.test }}"
-                run: ./tools/test-github.sh "TEST-${{ matrix.test }}" ${{ matrix.test }}
+                run: USE_NETWORK=${{ matrix.network }} ./tools/test-github.sh "TEST-${{ matrix.test }}" ${{ matrix.test }}
     arm64:
         name: ${{ matrix.test }} on ${{ matrix.container }} on arm64
         runs-on: ubuntu-latest
