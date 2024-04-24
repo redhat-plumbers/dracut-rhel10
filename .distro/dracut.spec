@@ -7,7 +7,7 @@
 %global __requires_exclude pkg-config
 
 Name: dracut
-Version: 060
+Version: 101
 Release: 1%{?dist}
 
 Summary: Initramfs generator using udev
@@ -187,11 +187,8 @@ rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/81cio_ignore
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/91zipl
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95dasd
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95dasd_mod
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95dasd_rules
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95dcssblk
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95qeth_rules
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95zfcp
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95zfcp_rules
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95znet
 %else
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00warpclock
@@ -288,6 +285,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/09dbus
 %{dracutlibdir}/modules.d/10i18n
 %{dracutlibdir}/modules.d/30convertfs
+%{dracutlibdir}/modules.d/45net-lib
 %{dracutlibdir}/modules.d/45url-lib
 %{dracutlibdir}/modules.d/50drm
 %{dracutlibdir}/modules.d/50plymouth
@@ -318,6 +316,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/91tpm2-tss
 %{dracutlibdir}/modules.d/95debug
 %{dracutlibdir}/modules.d/95fstab-sys
+%{dracutlibdir}/modules.d/95hwdb
 %{dracutlibdir}/modules.d/95lunmask
 %{dracutlibdir}/modules.d/95resume
 %{dracutlibdir}/modules.d/95rootfs-block
@@ -331,11 +330,8 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/91zipl
 %{dracutlibdir}/modules.d/95dasd
 %{dracutlibdir}/modules.d/95dasd_mod
-%{dracutlibdir}/modules.d/95dasd_rules
 %{dracutlibdir}/modules.d/95dcssblk
-%{dracutlibdir}/modules.d/95qeth_rules
 %{dracutlibdir}/modules.d/95zfcp
-%{dracutlibdir}/modules.d/95zfcp_rules
 %endif
 %{dracutlibdir}/modules.d/96securityfs
 %{dracutlibdir}/modules.d/97masterkey
@@ -426,6 +422,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu May 16 2024 Pavel Valena <pvalena@redhat.com> - 101-1
+- Update to dracut 101.
+
 * Fri Apr 26 2024 Adam Williamson <awilliam@redhat.com> - 060-2
 - Backport fix to pull in required libs for systemd (dracut-ng PR #118)
 - Backport fix to move hook directory for systemd (dracut-ng PR #194)
