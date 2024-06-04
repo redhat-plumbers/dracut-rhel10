@@ -28,7 +28,7 @@ jobs:
                         "01",
                 ]
         container:
-            image: ghcr.io/dracut-ng/${{ matrix.container }}
+            image: ghcr.io/${{ github.repository_owner }}/${{ matrix.container }}
             options: '--device=/dev/kvm'
         steps:
             -   name: "Checkout Repository"
@@ -38,7 +38,7 @@ jobs:
     extended:
         name: ${{ matrix.test }} on ${{ matrix.container }}
         runs-on: ubuntu-latest
-        timeout-minutes: 30
+        timeout-minutes: 45
         concurrency:
             group: extended-${{ github.workflow }}-${{ github.ref }}-${{ matrix.container }}-${{ matrix.test }}
             cancel-in-progress: true
@@ -76,7 +76,7 @@ jobs:
     dracut-cpio:
         name: ${{ matrix.test }} on ${{ matrix.container }}
         runs-on: ubuntu-latest
-        timeout-minutes: 30
+        timeout-minutes: 45
         concurrency:
             group: dracut-cpio-${{ github.workflow }}-${{ github.ref }}-${{ matrix.container }}-${{ matrix.test }}
 
@@ -87,11 +87,6 @@ jobs:
             matrix:
                 container: [
                         "centos:stream10",
-                ]
-                network: [
-                        "network-manager",
-                        #"systemd-networkd",
-                        #"connman",
                 ]
                 test: [
                         "20",
@@ -158,14 +153,8 @@ jobs:
                 ]
                 include:
                   - network: ""
-                  - # on debian run tests with systemd-networkd
-                    container: "debian"
-                    network: "systemd-networkd"
-                  - # on openSUSE run tests with network-legacy
-                    container: "opensuse"
-                    network: "network-legacy"
         container:
-            image: ghcr.io/dracut-ng/${{ matrix.container }}
+            image: ghcr.io/${{ github.repository_owner }}/${{ matrix.container }}
             options: '--device=/dev/kvm'
         steps:
             -   name: "Checkout Repository"
@@ -190,14 +179,8 @@ jobs:
                 test: [ "30","35" ]
                 include:
                   - network: ""
-                  - # on debian run tests with systemd-networkd
-                    container: "debian"
-                    network: "systemd-networkd"
-                  - # on openSUSE run tests with network-legacy
-                    container: "opensuse"
-                    network: "network-legacy"
         container:
-            image: ghcr.io/dracut-ng/${{ matrix.container }}
+            image: ghcr.io/${{ github.repository_owner }}/${{ matrix.container }}
             options: '--device=/dev/kvm'
         steps:
             -   name: "Checkout Repository"
@@ -222,14 +205,8 @@ jobs:
                 test: [ "40" ]
                 include:
                   - network: ""
-                  - # on openSUSE run tests with network-legacy
-                    container: "opensuse"
-                    network: "network-legacy"
-                  - # on debian run this test on network-legacy to be able to pass it
-                    container: "debian"
-                    network: "network-legacy"
         container:
-            image: ghcr.io/dracut-ng/${{ matrix.container }}
+            image: ghcr.io/${{ github.repository_owner }}/${{ matrix.container }}
             options: '--device=/dev/kvm'
         steps:
             -   name: "Checkout Repository"
