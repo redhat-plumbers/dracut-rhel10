@@ -1,5 +1,5 @@
 <description/>
 
-(Cherry picked from commit <commit/> )
+(cherry picked from commit <commit/>)
 
 Resolves: <issue-or-bug/>

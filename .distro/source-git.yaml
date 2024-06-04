@@ -1,11 +1,12 @@
 upstream_project_url: git@github.com:dracut-ng/dracut-ng.git
-upstream_ref: 2255bf3464536b02342d13398c5331999fcfd4fa
+upstream_ref: 1a8ee6e00bbe017717a5ef9e9bcfefb3b88f629e
 downstream_package_name: dracut
 specfile_path: .distro/dracut.spec
 patch_generation_ignore_paths:
 - .distro/
 - .packit.yml
 - .github/
+- test/
 patch_generation_patch_id_digits: 1
 sync_changelog: true
 files_to_sync:
@@ -15,8 +16,13 @@ files_to_sync:
   filters:
   - protect .git*
   - protect sources
+  - protect .fmf*
+  - protect gating.yaml
+  - protect plans.fmf
+  - protect ci.fmf
   - exclude source-git.yaml
   - exclude .gitignore
+
 sources:
-- path: dracut-ng-101.tar.gz
-  url: https://github.com/dracut-ng/dracut-ng/archive/refs/tags/101.tar.gz
+- path: dracut-ng-102.tar.gz
+  url: https://github.com/dracut-ng/dracut-ng/archive/refs/tags/102.tar.gz

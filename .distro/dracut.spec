@@ -7,7 +7,7 @@
 %global __requires_exclude pkg-config
 
 Name: dracut
-Version: 101
+Version: 102
 Release: 1%{?dist}
 
 Summary: Initramfs generator using udev
@@ -25,7 +25,7 @@ Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git
-# Source-git repository: https://github.com/redhat-plumbers/dracut-fedora/
+# Source-git repository: https://github.com/redhat-plumbers/dracut-rhel10/
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -144,6 +144,7 @@ This package contains tools to assemble the local initrd and host configuration.
 Summary: dracut module to build an initramfs with most files in a squashfs image
 Requires: %{name} = %{version}-%{release}
 Requires: squashfs-tools
+Suggests: erofs-utils
 
 %description squash
 This package provides a dracut module to build an initramfs, but store most files
@@ -253,6 +254,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/01fips
 %{dracutlibdir}/modules.d/01systemd-ac-power
 %{dracutlibdir}/modules.d/01systemd-ask-password
+%{dracutlibdir}/modules.d/01systemd-bsod
 %{dracutlibdir}/modules.d/01systemd-coredump
 %{dracutlibdir}/modules.d/01systemd-creds
 %{dracutlibdir}/modules.d/01systemd-hostnamed
@@ -305,9 +307,12 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/90mdraid
 %{dracutlibdir}/modules.d/90multipath
 %{dracutlibdir}/modules.d/90nvdimm
+%{dracutlibdir}/modules.d/90numlock
 %{dracutlibdir}/modules.d/90overlayfs
 %{dracutlibdir}/modules.d/90ppcmac
+%{dracutlibdir}/modules.d/90pcmcia
 %{dracutlibdir}/modules.d/90qemu
+%{dracutlibdir}/modules.d/90systemd-cryptsetup
 %{dracutlibdir}/modules.d/91crypt-gpg
 %{dracutlibdir}/modules.d/91crypt-loop
 %{dracutlibdir}/modules.d/91fido2
@@ -413,6 +418,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 
 %files squash
 %{dracutlibdir}/modules.d/99squash
+%{dracutlibdir}/modules.d/99squash-lib
+%{dracutlibdir}/modules.d/95squash-erofs
+%{dracutlibdir}/modules.d/95squash-squashfs
 
 %files config-generic
 %{dracutlibdir}/dracut.conf.d/02-generic-image.conf
@@ -422,18 +430,17 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Tue Jun 04 2024 Pavel Valena <pvalena@redhat.com> - 102-1
+- Update to dracut 102.
+  Resolves: RHEL-43460,RHEL-32237,RHEL-32506,RHEL-43460,RHEL-47145,RHEL-49744,RHEL-53350
+
+* Mon Jun 24 2024 Troy Dawson <tdawson@redhat.com> - 101-2
+- Bump release for June 2024 mass rebuild
+
 * Thu May 16 2024 Pavel Valena <pvalena@redhat.com> - 101-1
 - Update to dracut 101.
-
-* Fri Apr 26 2024 Adam Williamson <awilliam@redhat.com> - 060-2
-- Backport fix to pull in required libs for systemd (dracut-ng PR #118)
-- Backport fix to move hook directory for systemd (dracut-ng PR #194)
-
-* Wed Mar 20 2024 Pavel Valena <pvalena@redhat.com> - 060-1
-- Update to dracut 060.
-
-* Mon Feb 12 2024 Pavel Valena <pvalena@redhat.com> - 059-22
 - Remove network-legacy module.
+- Additional fixes on top of rebase (see patches).
 
 * Sat Jan 27 2024 Manuel Fombuena <fombuena@outlook.com> - 059-21
 - fix(pkcs11): delete trailing dot on libcryptsetup-token-systemd-pkcs11.so
