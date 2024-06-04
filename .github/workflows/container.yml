@@ -31,10 +31,9 @@ jobs:
             fail-fast: false
             matrix:
                 architecture:
-                    - {platform: 'linux/amd64', runner: 'ubuntu-24.04', tag: 'amd'}
-                    - {platform: 'linux/arm64', runner: 'ubuntu-24.04-arm', tag: 'arm'}
+                    - {platform: 'linux/amd64', runner: 'ubuntu-latest', tag: 'amd'}
+                    - {platform: 'linux/arm64', runner: 'ubuntu-latest-arm', tag: 'arm'}
                 config:
-                    - {dockerfile: 'Dockerfile-fedora', tag: 'fedora:latest'}
                     - {dockerfile: 'Dockerfile-CentOS-10-Stream', tag: 'centos:stream10'}
         runs-on: ${{ matrix.architecture.runner }}
         steps:

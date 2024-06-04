@@ -10,7 +10,7 @@ on:  # yamllint disable-line rule:truthy
             container:
                 type: choice
                 description: 'distro'
-                default: 'fedora'
+                default: 'centos:stream10'
                 options:
                     - "all"
                     - "centos:stream10"
