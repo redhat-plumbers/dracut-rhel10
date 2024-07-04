@@ -20,7 +20,7 @@ jobs:
             fail-fast: false
             matrix:
                 container: [
-                        "fedora",
+                        "centos:stream10",
                 ]
                 test: [
                         "01",
@@ -83,7 +83,7 @@ jobs:
             fail-fast: false
             matrix:
                 container: [
-                        "fedora",
+                        "centos:stream10",
                 ]
                 test: [
                         "20",
@@ -115,7 +115,7 @@ jobs:
             fail-fast: false
             matrix:
                 container: [
-                        "fedora",
+                        "centos:stream10",
                 ]
                 test: [
                         "98",
