@@ -213,7 +213,7 @@ test_setup() {
 
     # Make server's dracut image
     "$DRACUT" -l \
-        -a "dash rootfs-block test kernel-modules network-legacy" \
+        -a "rootfs-block test kernel-modules ${USE_NETWORK}" \
         -d "piix ide-gd_mod ata_piix ext4 sd_mod e1000 drbg virtio_pci virtio_scsi" \
         -i "./server.link" "/etc/systemd/network/01-server.link" \
         -i ./wait-if-server.sh /lib/dracut/hooks/pre-mount/99-wait-if-server.sh \
@@ -222,6 +222,7 @@ test_setup() {
 
     # Make client's dracut image
     test_dracut \
+        --no-hostonly --no-hostonly-cmdline \
         --add "$USE_NETWORK" \
         --include "./client.link" "/etc/systemd/network/01-client.link" \
         --kernel-cmdline "rw rd.auto rd.retry=50" \
