@@ -133,6 +133,10 @@ find_initrd_for_kernel_version() {
         echo "/lib/modules/${kernel_version}/initrd"
     elif [[ -f /lib/modules/${kernel_version}/initramfs.img ]]; then
         echo "/lib/modules/${kernel_version}/initramfs.img"
+    elif [[ -f /usr/lib/modules/${kernel_version}/initrd ]]; then
+        echo "/usr/lib/modules/${kernel_version}/initrd"
+    elif [[ -f /usr/lib/modules/${kernel_version}/initramfs.img ]]; then
+        echo "/usr/lib/modules/${kernel_version}/initramfs.img"
     elif [[ -f /boot/initramfs-${kernel_version}.img ]]; then
         echo "/boot/initramfs-${kernel_version}.img"
     elif [[ -f /usr/lib/modules/${kernel_version}/initramfs.img ]]; then
