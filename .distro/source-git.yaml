@@ -11,6 +11,10 @@ files_to_sync:
   filters:
   - protect .git*
   - protect sources
+  - protect .fmf*
+  - protect gating.yaml
+  - protect plans.fmf
+  - protect ci.fmf
   - exclude source-git.yaml
   - exclude .gitignore
 
