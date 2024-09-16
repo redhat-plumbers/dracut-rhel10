@@ -7,7 +7,7 @@
 %global __requires_exclude pkg-config
 
 Name: dracut
-Version: 102
+Version: 103
 Release: 1%{?dist}
 
 Summary: Initramfs generator using udev
@@ -430,7 +430,10 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
-* Tue Jun 04 2024 Pavel Valena <pvalena@redhat.com> - 102-1
+* Mon Sep 16 2024 Pavel Valena <pvalena@redhat.com> - 103-1
+- Update to dracut 103.
+
+* Mon Jun 24 2024 Pavel Valena <pvalena@redhat.com> - 102-1
 - Update to dracut 102.
   Resolves: RHEL-43460,RHEL-32237,RHEL-32506,RHEL-43460,RHEL-47145,RHEL-49744,RHEL-53350
 
