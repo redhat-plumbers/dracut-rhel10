@@ -33,64 +33,6 @@ jobs:
                 uses: actions/checkout@v4
             -   name: "${{ matrix.container }} TEST-${{ matrix.test }}"
                 run: ./tools/test-github.sh "TEST-${{ matrix.test }}" ${{ matrix.test }}
-    network:
-        name: ${{ matrix.test }} on ${{ matrix.container }} using ${{ matrix.network }}
-        runs-on: ubuntu-latest
-        timeout-minutes: 45
-        concurrency:
-            group: network-${{ github.workflow }}-${{ github.ref }}-${{ matrix.container }}-${{ matrix.test }}-${{ matrix.network }}
-            cancel-in-progress: true
-        strategy:
-            matrix:
-                container: [
-                        "centos:stream10",
-                ]
-                network: [
-                        "network",
-                ]
-                test: [
-                        "20",
-                        "40",
-                        "50",
-                        "60",
-                ]
-            fail-fast: false
-        container:
-            image: ghcr.io/redhat-plumbers/${{ matrix.container }}
-            options: "--privileged -v /dev:/dev"
-        steps:
-            -   name: "Checkout Repository"
-                uses: actions/checkout@v4
-            -   name: "${{ matrix.container }} TEST-${{ matrix.test }}"
-                run: USE_NETWORK=${{ matrix.network }} ./tools/test-github.sh "TEST-${{ matrix.test }}" ${{ matrix.test }}
-    systemd-networkd:
-        name: ${{ matrix.test }} on ${{ matrix.container }} using ${{ matrix.network }}
-        runs-on: ubuntu-latest
-        timeout-minutes: 45
-        concurrency:
-            group: systemd-networkd-${{ github.workflow }}-${{ github.ref }}-${{ matrix.container }}-${{ matrix.test }}-${{ matrix.network }}
-            cancel-in-progress: true
-        strategy:
-            matrix:
-                container: [
-                        "arch",
-                ]
-                network: [
-                        "systemd-networkd",
-                ]
-                test: [
-                        "35",
-                        "40",
-                ]
-            fail-fast: false
-        container:
-            image: ghcr.io/redhat-plumbers/${{ matrix.container }}
-            options: "--privileged -v /dev:/dev"
-        steps:
-            -   name: "Checkout Repository"
-                uses: actions/checkout@v4
-            -   name: "${{ matrix.container }} TEST-${{ matrix.test }}"
-                run: USE_NETWORK=${{ matrix.network }} ./tools/test-github.sh "TEST-${{ matrix.test }}" ${{ matrix.test }}
     extended:
         name: ${{ matrix.test }} on ${{ matrix.container }}
         runs-on: ubuntu-latest
@@ -134,8 +76,6 @@ jobs:
         timeout-minutes: 45
         concurrency:
             group: dracut-cpio-${{ github.workflow }}-${{ github.ref }}-${{ matrix.container }}-${{ matrix.test }}
-
-
             cancel-in-progress: true
         strategy:
             fail-fast: false
@@ -144,12 +84,7 @@ jobs:
                         "centos:stream10",
                 ]
                 test: [
-                        "20",
-                        "30",
-                        "35",
-                        "40",
-                        "50",
-                        "60",
+                        "63",
                 ]
         container:
             image: ghcr.io/${{ github.repository_owner }}/${{ matrix.container }}
@@ -157,11 +92,33 @@ jobs:
         steps:
             -   name: "Checkout Repository"
                 uses: actions/checkout@v4
-                with:
-                    fetch-depth: 0
-
             -   name: "${{ matrix.container }} TEST-${{ matrix.test }}"
-                run: USE_NETWORK=${{ matrix.network }} ./tools/test-github.sh "TEST-${{ matrix.test }}" ${{ matrix.test }}
+                run: ./tools/test-github.sh "TEST-${{ matrix.test }}" ${{ matrix.test }}
+    arm64:
+        name: ${{ matrix.test }} on ${{ matrix.container }} on arm64
+        runs-on: ubuntu-latest
+        timeout-minutes: 45
+        concurrency:
+            group: arm64-${{ github.workflow }}-${{ github.ref }}-${{ matrix.container }}-${{ matrix.test }}
+            cancel-in-progress: true
+        strategy:
+            fail-fast: false
+            matrix:
+                container: [
+                        "centos:stream10",
+                ]
+                test: [
+                        "98",
+                ]
+        steps:
+            -   name: Set up QEMU
+                uses: docker/setup-qemu-action@v3
+                with:
+                    platforms: 'linux/arm64'
+            -   name: "Checkout Repository"
+                uses: actions/checkout@v4
+            -   name: "${{ matrix.container }} TEST-${{ matrix.test }}"
+                run: docker run --platform linux/arm64 --privileged -v /dev:/dev -v $PWD:/w ghcr.io/${{ github.repository_owner }}/${{ matrix.container }} /w/tools/test-github.sh "TEST-${{ matrix.test }}" ${{ matrix.test }}
     network:
         # all nfs based on default networking
         name: ${{ matrix.test }} on ${{ matrix.container }}
