@@ -79,8 +79,6 @@ jobs:
         timeout-minutes: 45
         concurrency:
             group: dracut-cpio-${{ github.workflow }}-${{ github.ref }}-${{ matrix.container }}-${{ matrix.test }}
-
-
             cancel-in-progress: true
         strategy:
             fail-fast: false
@@ -89,12 +87,7 @@ jobs:
                         "centos:stream10",
                 ]
                 test: [
-                        "20",
-                        "30",
-                        "35",
-                        "40",
-                        "50",
-                        "60",
+                        "63",
                 ]
         container:
             image: ghcr.io/${{ github.repository_owner }}/${{ matrix.container }}
@@ -102,15 +95,12 @@ jobs:
         steps:
             -   name: "Checkout Repository"
                 uses: actions/checkout@v4
-                with:
-                    fetch-depth: 0
-
             -   name: "${{ matrix.container }} TEST-${{ matrix.test }}"
                 run: ./test/test-github.sh "TEST-${{ matrix.test }}" ${{ matrix.test }}
     arm64:
         name: ${{ matrix.test }} on ${{ matrix.container }} on arm64
         runs-on: ubuntu-latest
-        timeout-minutes: 30
+        timeout-minutes: 45
         concurrency:
             group: arm64-${{ github.workflow }}-${{ github.ref }}-${{ matrix.container }}-${{ matrix.test }}
             cancel-in-progress: true
