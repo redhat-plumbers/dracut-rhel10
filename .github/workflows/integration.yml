@@ -112,7 +112,6 @@ jobs:
               uses: actions/checkout@v4
             - name: "${{ matrix.container }} TEST-${{ matrix.test }}"
               run: ./test/test-container.sh "TEST-${{ matrix.test }}" ${{ matrix.test }}
-
     network:
         needs: basic
         # all nfs based on default networking
@@ -167,3 +166,4 @@ jobs:
               uses: actions/checkout@v4
             - name: "${{ matrix.container }} TEST-${{ matrix.test }}"
               run: USE_NETWORK=${{ matrix.network }} ./test/test-container.sh "TEST-${{ matrix.test }}" ${{ matrix.test }}
+
