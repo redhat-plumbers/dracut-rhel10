@@ -446,26 +446,10 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 * Wed Jan 29 2025 Pavel Valena <pvalena@redhat.com> - 105-1
 - build: upgrade to dracut 105
 
-* Thu Jan 16 2025 Fedora Release Engineering <releng@fedoraproject.org> - 103-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_42_Mass_Rebuild
-
-* Thu Oct 31 2024 Manuel Fombuena <fombuena@outlook.com> - 103-2
-- fix(pcsc): add libpcsclite_real.so.*
-
 * Mon Sep 16 2024 Pavel Valena <pvalena@redhat.com> - 103-1
 - Update to dracut 103.
-- build: enable dracut-cpio binary
-- feat(fips-crypto-policies): make c-p follow FIPS mode automatically
-- fix(fips-crypto-policies): make it depend on fips dracut module
-- build: package fips-crypto-policies module
 
-* Wed Jul 17 2024 Fedora Release Engineering <releng@fedoraproject.org> - 102-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_41_Mass_Rebuild
-
-* Sat Jul 13 2024 Pavel Valena <pvalena@redhat.com> - 102-2
-- Fixes for rhbz#2276271, rhbz#2295215
-
-* Fri Jun 28 2024 Pavel Valena <pvalena@redhat.com> - 102-1
+* Mon Jun 24 2024 Pavel Valena <pvalena@redhat.com> - 102-1
 - Update to dracut 102.
   Resolves: RHEL-43460,RHEL-32237,RHEL-32506,RHEL-43460,RHEL-47145,RHEL-49744,RHEL-53350
 
