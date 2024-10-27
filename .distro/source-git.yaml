@@ -54,20 +54,18 @@ jobs:
   trigger: pull_request
   scratch: true
   targets:
-    - fedora-rawhide-x86_64
-    - fedora-eln-x86_64
+    - centos-stream-10-x86_64
 
 - job: copr_build
   trigger: pull_request
   targets:
-    - fedora-rawhide-x86_64
-    - fedora-eln-x86_64
+    - centos-stream-10-x86_64
 
 # Run tests (via testing farm)
 - job: tests
   trigger: pull_request
   targets:
-    - fedora-rawhide-x86_64
+    - centos-stream-10-x86_64
 #    - fedora-eln-x86_64
 
 ## Create fedora PR

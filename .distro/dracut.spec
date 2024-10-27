@@ -439,12 +439,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 * Mon Sep 16 2024 Pavel Valena <pvalena@redhat.com> - 103-1
 - Update to dracut 103.
 
-* Wed Jul 17 2024 Fedora Release Engineering <releng@fedoraproject.org> - 102-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_41_Mass_Rebuild
-
-* Sat Jul 13 2024 Pavel Valena <pvalena@redhat.com> - 102-2
-- Fixes for rhbz#2276271, rhbz#2295215
-
 * Fri Jun 28 2024 Pavel Valena <pvalena@redhat.com> - 102-1
 - Update to dracut 102.
   Resolves: RHEL-43460,RHEL-32237,RHEL-32506,RHEL-43460,RHEL-47145,RHEL-49744,RHEL-53350
