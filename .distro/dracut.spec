@@ -439,6 +439,23 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 * Mon Sep 16 2024 Pavel Valena <pvalena@redhat.com> - 103-1
 - Update to dracut 103.
 
+* Wed Aug 28 2024 Pavel Valena <pvalena@redhat.com> - 102-3
+- revert(dracut-init.sh): add module to mods_to_load before checking dependencies
+- fix(squash): remove cyclic dependency
+- fix(dracut.sh): exit when installing the squash loader fails
+- fix(squash-lib): harden against empty $initdir
+  Resolves: RHEL-43460
+
+* Mon Aug 19 2024 Pavel Valena <pvalena@redhat.com> - 102-2
+- fix(nfs): set correct ownership and permissions for statd directory
+- fix(resume): do not include resume if swap is on netdevice
+- feat(dracut-init.sh): give --force-add precedence over --omit
+- feat(lsinitrd.sh): look for initrd in /usr/lib/modules/
+- feat(fips): include fips module unconditionally
+- fix(nfs): include also entries from /usr/lib/{passwd,group}
+- fix(dracut-functions): avoid awk in get_maj_min()
+  Resolves: RHEL-39404,RHEL-47145,RHEL-53350,RHEL-53361,RHEL-53431,RHEL-53791,RHEL-54650
+
 * Mon Jun 24 2024 Pavel Valena <pvalena@redhat.com> - 102-1
 - Update to dracut 102.
   Resolves: RHEL-43460,RHEL-32237,RHEL-32506,RHEL-43460,RHEL-47145,RHEL-49744,RHEL-53350
