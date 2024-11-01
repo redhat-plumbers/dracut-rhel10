@@ -401,7 +401,6 @@ test_setup() {
 
     # Make client's dracut image
     test_dracut \
-        --no-hostonly --no-hostonly-cmdline \
         -a "dmsquash-live ${USE_NETWORK}" \
         "$TESTDIR"/initramfs.testing
 
