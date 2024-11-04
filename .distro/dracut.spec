@@ -35,7 +35,6 @@ BuildRequires: gcc
 BuildRequires: pkgconfig
 BuildRequires: systemd
 BuildRequires: bash-completion
-BuildRequires: cargo
 
 %if %{with doc}
 BuildRequires: docbook-style-xsl docbook-dtds libxslt
@@ -46,8 +45,6 @@ Obsoletes: dracut-fips <= 047
 Provides:  dracut-fips = %{version}-%{release}
 Obsoletes: dracut-fips-aesni <= 047
 Provides:  dracut-fips-aesni = %{version}-%{release}
-
-Provides: bundled(crate(crosvm)) = 0.1.0
 
 Requires: bash >= 4
 Requires: coreutils
@@ -162,7 +159,6 @@ cp %{SOURCE1} .
 %configure  --systemdsystemunitdir=%{_unitdir} \
             --bashcompletiondir=$(pkg-config --variable=completionsdir bash-completion) \
             --libdir=%{_prefix}/lib \
-            --enable-dracut-cpio \
 %if %{without doc}
             --disable-documentation \
 %endif
@@ -231,7 +227,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/dracut-install
 %{dracutlibdir}/dracut-util
 %{dracutlibdir}/skipcpio
-%{dracutlibdir}/dracut-cpio
 %config(noreplace) %{_sysconfdir}/dracut.conf
 %{dracutlibdir}/dracut.conf.d/01-dist.conf
 %dir %{_sysconfdir}/dracut.conf.d
