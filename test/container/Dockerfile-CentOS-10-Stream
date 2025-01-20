@@ -43,7 +43,8 @@ RUN dnf -y install --skip-broken --enablerepo crb --setopt=install_weak_deps=Fal
     tcpdump \
     wget \
     which \
-    xz
+    xz \
+    openssl-devel
 #    && dnf -y update && dnf clean all
 
 # C10S ships only qemu-kvm, but it disables the KVM accel when it's not

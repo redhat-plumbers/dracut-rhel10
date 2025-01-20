@@ -50,7 +50,7 @@ manpages = $(man1pages) $(man5pages) $(man7pages) $(man8pages)
 
 .PHONY: install clean archive testimage test all check AUTHORS CONTRIBUTORS doc
 
-all: dracut.pc dracut-install src/skipcpio/skipcpio dracut-util
+all: dracut.pc dracut-install src/skipcpio/skipcpio dracut-util ossl-config ossl-files
 
 %.o : %.c
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $(KMOD_CFLAGS) $< -o $@
@@ -87,6 +87,12 @@ util/util: $(UTIL_OBJECTS)
 
 dracut-util: src/util/util
 	cp -a $< $@
+
+ossl: src/ossl/Makefile
+	$(MAKE) -C src/ossl
+
+ossl-config: ossl
+ossl-files: ossl
 
 .PHONY: indent-c
 indent-c:
@@ -208,6 +214,12 @@ endif
 	if [ -f dracut-util ]; then \
 		install -m 0755 dracut-util $(DESTDIR)$(pkglibdir)/dracut-util; \
 	fi
+	if [ -f src/ossl/src/ossl-config ]; then \
+		install -m 0755 src/ossl/src/ossl-config $(DESTDIR)$(pkglibdir)/ossl-config; \
+	fi
+	if [ -f src/ossl/src/ossl-files ]; then \
+		install -m 0755 src/ossl/src/ossl-files $(DESTDIR)$(pkglibdir)/ossl-files; \
+	fi
 ifeq ($(enable_dracut_cpio),yes)
 	install -m 0755 dracut-cpio $(DESTDIR)$(pkglibdir)/dracut-cpio
 endif
@@ -234,6 +246,7 @@ clean:
 	$(RM) dracut.pc
 	$(RM) dracut-cpio src/dracut-cpio/target/release/dracut-cpio*
 	$(MAKE) -C test clean
+	$(MAKE) -C src/ossl clean
 
 syncheck:
 	@ret=0;for i in dracut-initramfs-restore.sh modules.d/*/*.sh; do \
