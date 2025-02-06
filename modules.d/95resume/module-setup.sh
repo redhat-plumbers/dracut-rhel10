@@ -3,7 +3,6 @@
 # called by dracut
 # shellcheck disable=SC2317
 check() {
-
     swap_on_netdevice() {
         local _dev
         for _dev in "${swap_devs[@]}"; do
