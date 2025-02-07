@@ -358,7 +358,7 @@ test_setup() {
     )
     # Make server's dracut image
     "$DRACUT" -i "$TESTDIR"/overlay / \
-        -m "bash rootfs-block kernel-modules watchdog qemu network-legacy ${SERVER_DEBUG:+debug}" \
+        -m "bash rootfs-block kernel-modules watchdog qemu network ${SERVER_DEBUG:+debug}" \
         -d "af_packet piix ide-gd_mod ata_piix ext4 sd_mod nfsv2 nfsv3 nfsv4 nfs_acl nfs_layout_nfsv41_files nfsd i6300esb virtio_net" \
         --no-hostonly-cmdline -N \
         -f "$TESTDIR"/initramfs.server "$KVERSION"

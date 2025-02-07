@@ -375,8 +375,9 @@ test_setup() {
     )
     # Make server's dracut image
     "$DRACUT" -i "$TESTDIR"/overlay / \
-        -a "network-legacy ${SERVER_DEBUG:+debug}" \
+        -a "network ${SERVER_DEBUG:+debug}" \
         -d "af_packet piix ide-gd_mod ata_piix ext4 sd_mod i6300esb virtio_net" \
+
         --no-hostonly-cmdline -N \
         -f "$TESTDIR"/initramfs.server "$KVERSION"
 }
