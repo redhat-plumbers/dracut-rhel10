@@ -144,8 +144,8 @@ This package contains tools to assemble the local initrd and host configuration.
 %package squash
 Summary: dracut module to build an initramfs with most files in a squashfs image
 Requires: %{name} = %{version}-%{release}
-Requires: squashfs-tools
-Suggests: erofs-utils
+Requires: erofs-utils
+Suggests: squashfs-tools
 
 %description squash
 This package provides a dracut module to build an initramfs, but store most files
