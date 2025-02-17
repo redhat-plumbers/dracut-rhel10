@@ -440,12 +440,25 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
-* Wed Jan 29 2025 Pavel Valena <pvalena@redhat.com> - 105-1
+* Mon Feb 17 2025 Pavel Valena <pvalena@redhat.com> - 105-1
 - build: upgrade to dracut 105
+- fix(systemd-ask-password): do not half-install systemd-ask-password-wall
+- fix(pcsc): add libpcsclite_real.so.*
+- revert: "fix(rescue): make rescue always no-hostonly"
+- fix(dracut-install): initize fts pointer
 - feat: add openssl module
+- build: make erofs the default requirement for squash subpackage
+  Resolves: RHEL-65204,RHEL-68935,RHEL-76323
 
-* Mon Sep 16 2024 Pavel Valena <pvalena@redhat.com> - 103-1
+* Fri Nov 01 2024 Pavel Valena <pvalena@redhat.com> - 103-1
 - Update to dracut 103.
+- feat(fips-crypto-policies): make c-p follow FIPS mode automatically
+- fix(fips-crypto-policies): make it depend on fips dracut module
+  Resolves: RHEL-59678,RHEL-65204
+
+* Tue Oct 29 2024 Troy Dawson <tdawson@redhat.com> - 102-4
+- Bump release for October 2024 mass rebuild:
+  Resolves: RHEL-64018
 
 * Wed Aug 28 2024 Pavel Valena <pvalena@redhat.com> - 102-3
 - revert(dracut-init.sh): add module to mods_to_load before checking dependencies
