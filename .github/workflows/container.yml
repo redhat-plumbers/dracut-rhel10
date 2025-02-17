@@ -1,7 +1,7 @@
 name: Container
 on:
     schedule:
-        -  cron: '30 11 * * *'   # every day at 11:30 UTC
+        -  cron: '50 01 * * *'   # every day at 01:50 UTC
     push:
         branches: [ main ]
         paths:
