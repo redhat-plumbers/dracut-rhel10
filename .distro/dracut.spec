@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 105
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -440,6 +440,10 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Mon Feb 17 2025 Pavel Valena <pvalena@redhat.com> - 105-2
+- fix(openssl): harden ossl build CFLAGS
+  Related: RHEL-76323
+
 * Mon Feb 17 2025 Pavel Valena <pvalena@redhat.com> - 105-1
 - build: upgrade to dracut 105
 - fix(systemd-ask-password): do not half-install systemd-ask-password-wall
