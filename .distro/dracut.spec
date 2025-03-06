@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 105
-Release: 3%{?dist}
+Release: 4%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -440,6 +440,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu Mar 06 2025 Pavel Valena <pvalena@redhat.com> - 105-4
+- fix(rescue): create hmac file for rescue kernel
+
 * Mon Feb 17 2025 Pavel Valena <pvalena@redhat.com> - 105-3
 - fix(ossl): copy executables for the test suite
 
