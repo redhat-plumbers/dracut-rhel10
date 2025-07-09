@@ -13,7 +13,11 @@
 #
 #   -d      dry run (no destructive changes)
 #
-#   -p      WIP: previous version (default VERSION - 1)
+#   -p      previous version (default VERSION - 1)
+#
+#   -q      quiet mode
+#
+#   -r      remote to work with (default: origin)
 #
 #   -h      TODO: HELP (echo this)
 #
@@ -111,6 +115,12 @@ zsh -n "$0"
   :
 } || pv=
 
+: "Remote = -r"
+[[ "$1" == "-r" ]] && {
+  re="$2"
+  shift 2 ||:
+  :
+} || re=origin
 
 : 'Quiet mode = -q'
 [[ "$1" == "-q" ]] && {
@@ -157,12 +167,11 @@ p="${v}-pre-rebase${s}"
 
   : "Switch to pre-release branch: $p"
   dry gitcb "$p"
-  dry gituu origin "$p"
+  dry gituu "$re" "$p"
 
   r="rebase-${v}${s}"
   : "Switch to rebase branch: $r"
   dry gitcb "$r"
-  dry gituu origin "$r"
   gits | grep "^Your branch is up to date with"
 
   : 'Check upstream tag'
@@ -171,6 +180,7 @@ p="${v}-pre-rebase${s}"
 
   : 'Rebase'
   dry gite "${v}"
+  dry gituu "$re" "$r"
 
   : 'Verify commits'
   gitlp ||:

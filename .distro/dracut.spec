@@ -7,8 +7,8 @@
 %global __requires_exclude pkg-config
 
 Name: dracut
-Version: 105
-Release: 4%{?dist}
+Version: 107
+Release: 1%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -160,6 +160,7 @@ cp %{SOURCE1} .
 %configure  --systemdsystemunitdir=%{_unitdir} \
             --bashcompletiondir=$(pkg-config --variable=completionsdir bash-completion) \
             --libdir=%{_prefix}/lib \
+            --disable-dracut-cpio \
 %if %{without doc}
             --disable-documentation \
 %endif
@@ -218,7 +219,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 
 %files
 %if %{with doc}
-%doc README.md docs/HACKING.md AUTHORS NEWS.md dracut.html docs/dracut.png docs/dracut.svg
+%doc README.md AUTHORS NEWS.md
 %endif
 %license COPYING lgpl-2.1.txt
 %{_bindir}/dracut
@@ -257,7 +258,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %endif
 
 %{dracutlibdir}/modules.d/00bash
-%{dracutlibdir}/modules.d/00shell-interpreter
 %{dracutlibdir}/modules.d/00systemd
 %{dracutlibdir}/modules.d/00systemd-network-management
 %ifnarch s390 s390x
@@ -268,6 +268,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/01systemd-ac-power
 %{dracutlibdir}/modules.d/01systemd-ask-password
 %{dracutlibdir}/modules.d/01systemd-bsod
+%{dracutlibdir}/modules.d/01systemd-battery-check
 %{dracutlibdir}/modules.d/01systemd-coredump
 %{dracutlibdir}/modules.d/01systemd-creds
 %{dracutlibdir}/modules.d/01systemd-cryptsetup
@@ -300,10 +301,11 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/09dbus
 %{dracutlibdir}/modules.d/10i18n
 %{dracutlibdir}/modules.d/30convertfs
+%{dracutlibdir}/modules.d/45drm
+%{dracutlibdir}/modules.d/45simpledrm
 %{dracutlibdir}/modules.d/45net-lib
+%{dracutlibdir}/modules.d/45plymouth
 %{dracutlibdir}/modules.d/45url-lib
-%{dracutlibdir}/modules.d/50drm
-%{dracutlibdir}/modules.d/50plymouth
 %{dracutlibdir}/modules.d/62bluetooth
 %{dracutlibdir}/modules.d/80lvmmerge
 %{dracutlibdir}/modules.d/80lvmthinpool-monitor
@@ -351,6 +353,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/97masterkey
 %{dracutlibdir}/modules.d/98integrity
 %{dracutlibdir}/modules.d/97biosdevname
+%{dracutlibdir}/modules.d/97systemd-emergency
 %{dracutlibdir}/modules.d/98dracut-systemd
 %{dracutlibdir}/modules.d/98ecryptfs
 %{dracutlibdir}/modules.d/98pollcdrom
@@ -363,6 +366,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/99fs-lib
 %{dracutlibdir}/modules.d/99openssl
 %{dracutlibdir}/modules.d/99shutdown
+%{dracutlibdir}/modules.d/99shell-interpreter
 %attr(0644,root,root) %ghost %config(missingok,noreplace) %{_localstatedir}/log/dracut.log
 %dir %{_sharedstatedir}/initramfs
 %if %{defined _unitdir}
@@ -428,9 +432,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 
 %files squash
 %{dracutlibdir}/modules.d/99squash
-%{dracutlibdir}/modules.d/99squash-lib
 %{dracutlibdir}/modules.d/95squash-erofs
 %{dracutlibdir}/modules.d/95squash-squashfs
+%{dracutlibdir}/modules.d/99squash-lib
 
 %files config-generic
 %{dracutlibdir}/dracut.conf.d/02-generic-image.conf
@@ -440,6 +444,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu Jul 17 2025 Pavel Valena <pvalena@redhat.com> - 107-1
+- Upgrade to dracut 107
+
 * Thu Mar 06 2025 Pavel Valena <pvalena@redhat.com> - 105-4
 - fix(rescue): create hmac file for rescue kernel
 

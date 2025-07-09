@@ -2,7 +2,10 @@ FROM quay.io/centos/centos:stream10-development
 
 MAINTAINER https://github.com/redhat-plumbers/dracut-rhel10
 
+# prefer running tests with xfs
+ENV TEST_FSTYPE=xfs
 ENV container=docker
+
 LABEL RUN="docker run -it --name NAME --privileged --ipc=host --net=host --pid=host -e NAME=NAME -e IMAGE=IMAGE IMAGE"
 
 RUN echo 'export DRACUT_NO_XATTR=1 KVERSION=$(cd /lib/modules; ls -1 | tail -1)' > /etc/profile.d/dracut-test.sh
@@ -44,84 +47,88 @@ RUN dnf -y install --skip-broken --enablerepo crb --setopt=install_weak_deps=Fal
     wget \
     which \
     xz \
-    openssl-devel
+    btrfs-progs \
+    dhcp-client \
+    dhcp-server \
+    nbd \
+    qemu \
+    scsi-target-utils \
+    openssl-devel \
+    ;
 #    && dnf -y update && dnf clean all
-
-# C10S ships only qemu-kvm, but it disables the KVM accel when it's not
-# available
-RUN ln -sv /usr/libexec/qemu-kvm /usr/bin/qemu-kvm && \
-    ln -sv /usr/libexec/qemu-kvm /usr/bin/qemu-system-$(uname -m)
 
 # From Fedora container
 # Install needed packages for the dracut CI container
-RUN dnf -y install --skip-broken --setopt=install_weak_deps=False \
+RUN dnf -y install --skip-broken --enablerepo crb --setopt=install_weak_deps=False \
     asciidoc \
-    astyle \
     bash-completion \
     bluez \
     btrfs-progs \
-    busybox \
     bzip2 \
     cargo \
     cifs-utils \
+    crypto-policies-scripts \
     cryptsetup \
-    dash \
     dbus-daemon \
     device-mapper-multipath \
+    dhcp \
     dhcp-client \
     dhcp-server \
-    dmraid \
+    dracut-live \
     e2fsprogs \
     erofs-utils \
-    f2fs-tools \
     fcoe-utils \
     fuse3 \
     gcc \
     git \
+    ignition \
     iproute \
     iputils \
     iscsi-initiator-utils \
-    jfsutils \
     jq \
     kbd \
+    kdump-utils \
     kernel \
     kmod-devel \
+    libfido2 \
     libkcapi-hmaccalc \
     libselinux-utils \
     lvm2 \
-    lzop \
     make \
     mdadm \
     memstrack \
-    mkosi \
     nbd \
     ndctl \
     NetworkManager \
     nfs-utils \
-    ntfs-3g \
-    ntfsprogs \
     nvme-cli \
+    openssl-devel \
     parted \
     pcsc-lite \
     pigz \
     plymouth \
     qemu \
-    qrencode \
+    qemu-kvm \
     rng-tools \
     rpm-build \
-    sbsigntools \
+    rsyslog \
     scsi-target-utils \
-    ShellCheck \
-    shfmt \
     squashfs-tools \
+    strace \
+    sudo \
     swtpm \
     systemd-boot-unsigned \
-    systemd-networkd \
+    systemd-container \
+    systemd-devel \
     systemd-resolved \
     systemd-ukify \
     tar \
+    tcpdump \
     tpm2-tools \
+    wget \
+    which \
     xfsprogs \
+    xorriso \
     xz \
     && dnf -y update && dnf clean all
 
@@ -130,3 +137,10 @@ RUN dnf -y install --skip-broken --setopt=install_weak_deps=False \
 # since this is a distro specific change, lets do it in the container
 RUN \
   rm -rf /usr/lib/dracut/dracut.conf.d/50-nss-softokn.conf
+
+# CentOS Stream ships only qemu-kvm, but it disables the KVM accel when it's not available
+RUN \
+    [[ -e /usr/bin/qemu-kvm ]] || ln -sf /usr/libexec/qemu-kvm /usr/bin/qemu-kvm ;\
+    [[ -e /usr/bin/qemu-system-$(uname -m) ]] || ln -sv /usr/libexec/qemu-kvm /usr/bin/qemu-system-$(uname -m) ;\
+;\
+update-crypto-policies --no-reload --set FIPS

@@ -18,7 +18,7 @@ on:  # yamllint disable-line rule:truthy
                 description: 'Environment (optional)'
                 default: '{"DEBUGFAIL": "rd.debug"}'
             registry:
-                description: 'Registry for containers, such as ghcr.io/dracut-ng'
+                description: 'Registry for containers, such as ghcr.io/${{ github.repository_owner }}'
 
 env:
     ${{ fromJSON(inputs.env) }}

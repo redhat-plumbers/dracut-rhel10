@@ -16,7 +16,7 @@ jobs:
     basic:
         # run this test on all containers
         name: ${{ matrix.test }} on ${{ matrix.container }}
-        runs-on: ubuntu-24.04
+        runs-on: ubuntu-latest
         timeout-minutes: 20
         concurrency:
             group: basic-${{ github.workflow }}-${{ github.ref }}-${{ matrix.container }}-${{ matrix.test }}
@@ -25,22 +25,7 @@ jobs:
             fail-fast: false
             matrix:
                 container:
-                    - alpine:latest
-                    - alpine:edge
-                    - arch:latest
-                    - azurelinux:3.0
-                    - debian:latest
-                    - debian:sid
-                    - fedora:latest
-                    - fedora:rawhide
-                    - centos:stream10-development
-                    - gentoo:latest
-                    - gentoo:amd64-openrc
-                    - opensuse:latest
-                    - ubuntu:latest
-                    - ubuntu:devel
-                    - ubuntu:rolling
-                    - void:latest
+                    - centos:stream10
                 test:
                     - "10"
                     - "11"
@@ -57,7 +42,7 @@ jobs:
                     - "81"
                     - "82"
         container:
-            image: ghcr.io/dracut-ng/${{ matrix.container }}-amd
+            image: ghcr.io/${{ github.repository_owner }}/${{ matrix.container }}-amd
             options: '--device=/dev/kvm --privileged'
         steps:
             - name: "Checkout Repository"
