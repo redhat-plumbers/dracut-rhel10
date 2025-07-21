@@ -446,6 +446,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %changelog
 * Thu Jul 17 2025 Pavel Valena <pvalena@redhat.com> - 107-1
 - Upgrade to dracut 107
+  Resolves: RHEL-97473
 
 * Thu Mar 06 2025 Pavel Valena <pvalena@redhat.com> - 105-4
 - fix(rescue): create hmac file for rescue kernel
