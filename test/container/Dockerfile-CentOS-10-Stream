@@ -1,6 +1,4 @@
-FROM quay.io/centos/centos:stream10-development
-
-MAINTAINER https://github.com/redhat-plumbers/dracut-rhel10
+FROM quay.io/centos/centos:stream10
 
 # prefer running tests with xfs
 ENV TEST_FSTYPE=xfs
@@ -13,8 +11,8 @@ RUN echo 'export DRACUT_NO_XATTR=1 KVERSION=$(cd /lib/modules; ls -1 | tail -1)'
 # Install needed packages for the dracut CI container
 # FIXME: properly re-add dash once C10S EPEL is available
 RUN dnf -y install --skip-broken --enablerepo crb --setopt=install_weak_deps=False \
-    https://kojipkgs.fedoraproject.org//packages/dash/0.5.12/4.eln141/x86_64/dash-0.5.12-4.eln141.x86_64.rpm \
-    https://kojipkgs.fedoraproject.org//packages/btrfs-progs/6.9.2/1.eln141/x86_64/btrfs-progs-6.9.2-1.eln141.x86_64.rpm \
+    https://kojipkgs.fedoraproject.org//packages/dash/0.5.11.5/4.el10_1/x86_64/dash-0.5.11.5-4.el10_1.x86_64.rpm \
+    https://kojipkgs.fedoraproject.org//packages/btrfs-progs/6.12/3.el10_0/x86_64/btrfs-progs-6.12-3.el10_0.x86_64.rpm \
     qemu-kvm \
     NetworkManager \
     asciidoc \
@@ -142,5 +140,4 @@ RUN \
 RUN \
     [[ -e /usr/bin/qemu-kvm ]] || ln -sf /usr/libexec/qemu-kvm /usr/bin/qemu-kvm ;\
     [[ -e /usr/bin/qemu-system-$(uname -m) ]] || ln -sv /usr/libexec/qemu-kvm /usr/bin/qemu-system-$(uname -m) ;\
-;\
 update-crypto-policies --no-reload --set FIPS
