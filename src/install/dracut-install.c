@@ -1391,8 +1391,11 @@ static int install_all(int argc, char **argv)
                 log_debug("Handle '%s'", argv[i]);
 
                 if (strchr(argv[i], '/') == NULL) {
+
+                    log_debug("1>>> Noroot: '%s'", argv[i]);
                         char **p = find_binary(argv[i]);
                         if (p) {
+                                log_debug("6>>> YesBinary: '%s'", argv[i]);
                                 char **q = NULL;
                                 STRV_FOREACH(q, p) {
                                         char *newsrc = *q;
@@ -1404,13 +1407,18 @@ static int install_all(int argc, char **argv)
                                 }
                                 strv_free(p);
                         } else {
+                                log_debug("7>>> NoBinary: '%s'", argv[i]);
                                 ret = -1;
                         }
 
                 } else {
+                    log_debug("2>>> Yesroot: '%s'", argv[i]);
                         if (strchr(argv[i], '*') == NULL) {
+
+                                log_debug("4>>> NoStar: '%s'", argv[i]);
                                 ret = dracut_install(argv[i], argv[i], arg_createdir, arg_resolvedeps, true);
                         } else {
+                                log_debug("5>>> YesStar: '%s'", argv[i]);
                                 _cleanup_free_ char *realsrc = NULL;
                                 _cleanup_globfree_ glob_t globbuf;
 
@@ -1418,6 +1426,7 @@ static int install_all(int argc, char **argv)
 
                                 ret = glob(realsrc, 0, NULL, &globbuf);
                                 if (ret == 0) {
+                                    log_debug("8>>> YesSrc: '%s'", realsrc);
                                         size_t j;
 
                                         for (j = 0; j < globbuf.gl_pathc; j++) {
@@ -1428,6 +1437,8 @@ static int install_all(int argc, char **argv)
                                 }
                         }
                 }
+
+                log_debug("3>>> fin: '%d'", ret);
 
                 if ((ret != 0) && (!arg_optional)) {
                         log_error("ERROR: installing '%s'", argv[i]);

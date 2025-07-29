@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 107
-Release: 1%{?dist}
+Release: 1.1%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -22,6 +22,54 @@ URL: https://github.com/dracut-ng/dracut-ng/wiki/
 Source0: https://github.com/dracut-ng/dracut-ng/archive/refs/tags/%{version}.tar.gz
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
+# revert: "fix(install.d): correctly install pre-genned image and die if no args"
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0001:0001-revert-fix-install.d-correctly-install-pre-genned-im.patch
+# feat(kernel-install): do nothing when $KERNEL_INSTALL_INITRD_GENERATOR says so
+# Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
+Patch0002:0002-feat-kernel-install-do-nothing-when-KERNEL_INSTALL_I.patch
+# fix(kernel-install): do not generate an initrd when one was specified
+# Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
+Patch0003:0003-fix-kernel-install-do-not-generate-an-initrd-when-on.patch
+# fix(resume): always include the resume module
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0004:0004-fix-resume-always-include-the-resume-module.patch
+# feat(lsinitrd.sh): look for initrd in /usr/lib/modules/
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0005:0005-feat-lsinitrd.sh-look-for-initrd-in-usr-lib-modules.patch
+# feat(fips): include fips module unconditionally
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0006:0006-feat-fips-include-fips-module-unconditionally.patch
+# revert: "fix(rescue): make rescue always no-hostonly"
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0007:0007-revert-fix-rescue-make-rescue-always-no-hostonly.patch
+# fix(dracut-install): initize fts pointer
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0008:0008-fix-dracut-install-initize-fts-pointer.patch
+# feat: add openssl module
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0009:0009-feat-add-openssl-module.patch
+# fix(openssl): harden ossl build CFLAGS
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0010:0010-fix-openssl-harden-ossl-build-CFLAGS.patch
+# fix(ossl): copy executables for the test suite
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0011:0011-fix-ossl-copy-executables-for-the-test-suite.patch
+# fix(rescue): create hmac file for rescue kernel
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0012:0012-fix-rescue-create-hmac-file-for-rescue-kernel.patch
+# Revert "feat(systemd-sysusers): run systemd-sysusers as part
+# Author: Adam Williamson <awilliam@redhat.com>
+Patch0013:0013-Revert-feat-systemd-sysusers-run-systemd-sysusers-as.patch
+# Revert "chore: remove unused function"
+# Author: Adam Williamson <awilliam@redhat.com>
+Patch0014:0014-Revert-chore-remove-unused-function.patch
+# fix(ossl): ignore compiler warnings
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0015:0015-fix-ossl-ignore-compiler-warnings.patch
+# debug-dracut-install
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0016:0016-debug-dracut-install.patch
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git
