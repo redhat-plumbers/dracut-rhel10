@@ -9,6 +9,7 @@ depends() {
 # called by dracut
 install() {
     inst_multiple \
+        chroot \
         cp \
         dmesg \
         flock \
