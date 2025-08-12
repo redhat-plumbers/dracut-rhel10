@@ -40,7 +40,7 @@ jobs:
                     - {dockerfile: 'Dockerfile-CentOS-10-Stream', tag: 'centos:stream10', registry: 'quay.io/centos'}
         steps:
             - name: Check out the repo
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v3
             - name: Login to GitHub Container Registry
