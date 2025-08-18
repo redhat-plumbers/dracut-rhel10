@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 107
-Release: 1%{?dist}
+Release: 3%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -444,6 +444,22 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Mon Aug 18 2025 Pavel Valena <pvalena@redhat.com> - 107-3
+- test(SYSTEMD-INITRD): be more careful with `set -e` and subshells
+- test: fixup NFS test.sh
+  Resolves: RHEL-108215,RHEL-97473
+
+* Thu Aug 07 2025 Pavel Valena <pvalena@redhat.com> - 107-2
+- fix: improve hostonly sloppy mode
+- fix(dracut.sh): don't pass empty string as dir
+- feat(systemd): drop unnecessary dependency on libgcrypt
+- fix(kernel-modules-extra): remove stray  before /
+- Revert "fix(base): do not require chroot inside initramfs"
+- fix: let check_vol_slaves_all return 1 when checks on all slaves fail
+- improvement(74nvmf): lookup required NIC kernel modules for NBFT interfaces
+- fix(74nvmf): set root=nvmf
+  Resolves: RHEL-104223,RHEL-93173,RHEL-95542,RHEL-95897
+
 * Thu Jul 17 2025 Pavel Valena <pvalena@redhat.com> - 107-1
 - Upgrade to dracut 107
   Resolves: RHEL-97473
