@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 107
-Release: 3%{?dist}
+Release: 4%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -444,6 +444,14 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Fri Jan 30 2026 Pavel Valena <pvalena@redhat.com> - 107-4
+- fix(systemd-udevd): handle root=gpt-auto for systemd-v258
+- fix(systemd-repart): allow partition format
+- feat(install.d): do not remove UKIs on remove)
+- fix(dracut.install): remove extraneous quotes in dracut arguments
+- feat(i18n): pull 'drm' or 'simpledrm' module unless excluded
+  Resolves: RHEL-111580,RHEL-111709,RHEL-113071,RHEL-119787,RHEL-132571
+
 * Mon Aug 18 2025 Pavel Valena <pvalena@redhat.com> - 107-3
 - test(SYSTEMD-INITRD): be more careful with `set -e` and subshells
 - test: fixup NFS test.sh
