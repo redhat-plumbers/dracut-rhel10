@@ -115,9 +115,11 @@ ln='----------------------------------------------------------------------------
 echo "$ln"
 echo "$lst"
 
-res="$(echo "$res"| grep -E "$gr" | cut -d' ' -f2 | sort -u | xargs -ri echo -n '{},')"
+isu="$(echo "$res"| grep -E "$gr" | cut -d' ' -f2 | sort -u | xargs -ri echo -n '{},')"
 
-echo "  Resolves: ${res%,}"
+echo "  Resolves: ${isu%,}"
 echo "$ln"
 echo
-tr -s ',' ' ' <<< "$res"
+#tr -s ',' '\n' <<< "$res" | sed -e 's/^/Resolves: /g'
+
+echo "$res"| grep -E "$gr"
