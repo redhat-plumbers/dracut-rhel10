@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 107
-Release: 4%{?dist}
+Release: 5%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -58,17 +58,18 @@ Requires: sed
 Requires: xz
 Requires: gzip
 
-Recommends: memstrack
-Recommends: hardlink
-Recommends: pigz
-Recommends: kpartx
-Recommends: (tpm2-tools if tpm2-tss)
+Requires: hardlink
+Requires: (tpm2-tools if tpm2-tss)
 Requires: util-linux >= 2.21
 Requires: systemd >= 219
 Requires: systemd-udev >= 219
 Requires: procps-ng
-
 Requires: libkcapi-hmaccalc
+
+# Provides users to uninstall them optionally for system minimization.
+Recommends: pigz
+Recommends: memstrack
+Recommends: kpartx
 
 %description
 dracut contains tools to create bootable initramfses for the Linux
@@ -85,7 +86,6 @@ Requires: iputils
 Requires: iproute
 Requires: jq
 Requires: NetworkManager >= 1.20
-Suggests: NetworkManager
 Obsoletes: dracut-generic < 008
 Provides:  dracut-generic = %{version}-%{release}
 
@@ -145,7 +145,6 @@ This package contains tools to assemble the local initrd and host configuration.
 Summary: dracut module to build an initramfs with most files in a squashfs image
 Requires: %{name} = %{version}-%{release}
 Requires: erofs-utils
-Suggests: squashfs-tools
 
 %description squash
 This package provides a dracut module to build an initramfs, but store most files
@@ -444,6 +443,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu Feb 05 2026 Pavel Valena <pvalena@redhat.com> - 107-5
+- build: do not use weak dependencies in spec file
+
 * Fri Jan 30 2026 Pavel Valena <pvalena@redhat.com> - 107-4
 - fix(systemd-udevd): handle root=gpt-auto for systemd-v258
 - fix(systemd-repart): allow partition format
