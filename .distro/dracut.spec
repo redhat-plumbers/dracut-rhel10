@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 107
-Release: 5%{?dist}
+Release: 6%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -134,6 +134,14 @@ Obsoletes: dracut < 030
 This package provides the configuration to turn on the rescue initramfs
 generation with dracut.
 
+%package config-uki
+Summary: dracut configuration to switch to UKI generation instead of a classical image
+Requires: %{name} = %{version}-%{release}
+
+%description config-uki
+This package provides the configuration to switch to the UKI generation with dracut
+instead of a classical image.
+
 %package tools
 Summary: dracut tools to build the local initramfs
 Requires: %{name} = %{version}-%{release}
@@ -215,6 +223,7 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man?/*suse*
 
 echo 'hostonly="no"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-generic-image.conf
 echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-rescue.conf
+echo 'uefi="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-uki.conf
 
 %files
 %if %{with doc}
@@ -442,7 +451,13 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/dracut.conf.d/02-rescue.conf
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
+%files config-uki
+%{dracutlibdir}/dracut.conf.d/02-uki.conf
+
 %changelog
+* Thu Apr 09 2026 Pavel Valena <pvalena@redhat.com> - 107-6
+- spec: introduce config-uki subpackage
+
 * Thu Feb 05 2026 Pavel Valena <pvalena@redhat.com> - 107-5
 - build: do not use weak dependencies in spec file
 
