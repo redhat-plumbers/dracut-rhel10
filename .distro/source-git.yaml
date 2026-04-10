@@ -67,12 +67,13 @@ jobs:
     - centos-stream-10-x86_64
     - centos-stream-10-aarch64
 
+## TODO; disabled: https://github.com/packit/packit/issues/2700
 # Run tests (via testing farm)
-- job: tests
-  trigger: pull_request
-  targets:
-    - centos-stream-10-x86_64
-    - centos-stream-10-aarch64
+#- job: tests
+#  trigger: pull_request
+#  targets:
+#    - centos-stream-10-x86_64
+#    - centos-stream-10-aarch64
 
 ## Create PR
 #- job: propose_downstream
