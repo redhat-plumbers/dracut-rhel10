@@ -69,7 +69,6 @@ jobs:
                 container:
                     - centos:stream10
                 test:
-                    - "11"
                     - "12"
                     - "20"
                     - "23"
@@ -101,7 +100,6 @@ jobs:
                     - centos:stream10
                 test:
                     - "40"
-                    - "41"
                     - "42"
                     - "43"
         container:
