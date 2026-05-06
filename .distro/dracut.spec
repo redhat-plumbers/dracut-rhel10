@@ -445,6 +445,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %changelog
 * Tue Jul 28 2026 Pavel Valena <pvalena@redhat.com> - 107-10
 - fix(base): escape die() message in emergency hook script
+- fix(base): replace eval with safe variable indirection in splitsep and export_n
 
 * Thu Jul 02 2026 Pavel Valena <pvalena@redhat.com> - 107-9
 - fix(i18n): prefer 'simpledrm' over 'drm' module
