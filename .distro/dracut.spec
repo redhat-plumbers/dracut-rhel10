@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 107
-Release: 5%{?dist}
+Release: 7%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -443,6 +443,14 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Wed May 27 2026 Pavel Valena <pvalena@redhat.com> - 107-7
+- fix(base): escape arguments in initqueue hook script generation
+- fix(net-lib): warn on suspicious shell metacharacters in hostname file
+- fix(systemd-networkd): escape DHCP lease values in dhcpopts generation
+- fix(network-legacy): remove network-legacy completely from the codebase
+- fix(iscsi): replace `echo` writes with `printf` to prevent variable injection
+  Resolves: RHEL-170845
+
 * Thu Feb 05 2026 Pavel Valena <pvalena@redhat.com> - 107-5
 - build: do not use weak dependencies in spec file
 
