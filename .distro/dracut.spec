@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 107
-Release: 4%{?dist}
+Release: 5%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -444,6 +444,11 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu May 07 2026 Pavel Valena <pvalena@redhat.com> - 107-5
+- fix(network-legacy): remove network-legacy completely from the codebase
+- fix(iscsi): replace `echo` writes with `printf` to prevent variable injection
+  Resolves: RHEL-170844
+
 * Fri Jan 30 2026 Pavel Valena <pvalena@redhat.com> - 107-4
 - fix(systemd-udevd): handle root=gpt-auto for systemd-v258
 - fix(systemd-repart): allow partition format
