@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 107
-Release: 6%{?dist}
+Release: 7%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -444,6 +444,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Wed May 27 2026 Pavel Valena <pvalena@redhat.com> - 107-7
+- build: rebuild without an obsoleted patch
+
 * Wed May 20 2026 Pavel Valena <pvalena@redhat.com> - 107-6
 - fix(base): escape arguments in initqueue hook script generation
 - fix(net-lib): warn on suspicious shell metacharacters in hostname file
