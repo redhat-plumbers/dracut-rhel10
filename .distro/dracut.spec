@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 107
-Release: 7%{?dist}
+Release: 8%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -444,6 +444,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu Jun 25 2026 Pavel Valena <pvalena@redhat.com> - 107-8
+- revert: "feat(i18n): pull 'drm' or 'simpledrm' module unless excluded"
+
 * Wed May 27 2026 Pavel Valena <pvalena@redhat.com> - 107-7
 - build: rebuild without an obsoleted patch
 
