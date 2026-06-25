@@ -11,9 +11,9 @@ check() {
 
 # called by dracut
 depends() {
-    # Include "drm" / "simpledrm" to be able to set the console font properly
+    # Include "simpledrm" / "drm" to be able to set the console font properly
     local _module _drm
-    local -a _modules=(drm simpledrm)
+    local -a _modules=(simpledrm drm)
 
     for _module in "${_modules[@]}"; do
         if dracut_module_included "$_module"; then
