@@ -81,7 +81,7 @@ res="$(
   echo "$res" | grep -E "^Missing" | cut -d' ' -f2 \
     | while read c; do
       m="$(grep -E "^$c " <<< "$all" | cut -d' ' -f2-)"
-      echo "$m" | grep -qE '^(build|ci|chore|test): ' || {
+      echo "$m" | grep -qE '^(build|ci|chore|test)' || {
         echo "FAIL: $m"
         gith "$c" | cat
         echo
@@ -112,12 +112,14 @@ res="$(
 
 # 80
 ln='-------------------------------------------------------------------------------'
+
 echo "$ln"
 echo "$lst"
 
-res="$(echo "$res"| grep -E "$gr" | cut -d' ' -f2 | sort -u | xargs -ri echo -n '{},')"
+res="$(echo "$res" | grep -E "$gr" | sort -u)"
+isu="$(echo "$res" | cut -d' ' -f2 | sort -u | xargs -ri echo -n '{},')"
 
-echo "  Resolves: ${res%,}"
-echo "$ln"
-echo
-tr -s ',' ' ' <<< "$res"
+echo -e "\n  Resolves: ${isu%,}"
+echo -e "${ln}\n"
+
+echo "$res" | sed -e 's/$/\n/g'
