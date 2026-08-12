@@ -21,4 +21,7 @@ installkernel() {
         spapr-vscsi \
         qemu_fw_cfg \
         efi_secret
+
+    # needed for displaying console properly
+    hostonly='' instmods bochs
 }
