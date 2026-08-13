@@ -152,7 +152,7 @@ in a squashfs image, result in a smaller initramfs size and reduce runtime memor
 usage.
 
 %prep
-%autosetup -n %{name}-ng-%{version} -S git_am
+%autosetup -n %{name}-%{version} -S git_am
 cp %{SOURCE1} .
 
 %build
