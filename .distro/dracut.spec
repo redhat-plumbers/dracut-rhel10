@@ -333,7 +333,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/95fstab-sys
 %{dracutlibdir}/modules.d/95hwdb
 %{dracutlibdir}/modules.d/95lunmask
-%{dracutlibdir}/modules.d/95resume
+%{dracutlibdir}/modules.d/85resume
 %{dracutlibdir}/modules.d/95rootfs-block
 %{dracutlibdir}/modules.d/95terminfo
 %{dracutlibdir}/modules.d/95udev-rules
