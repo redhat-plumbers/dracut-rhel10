@@ -68,7 +68,7 @@ install() {
 
     if [[ $hostonly_cmdline == "yes" ]]; then
         _resumeconf=$(cmdline)
-        [[ $_resumeconf ]] && printf "%s\n" "$_resumeconf" >> "${initdir}/etc/cmdline.d/95resume.conf"
+        [[ $_resumeconf ]] && printf "%s\n" "$_resumeconf" >> "${initdir}/etc/cmdline.d/85resume.conf"
     fi
 
     # If we have a resume device on cmdline, we want its drivers in initrd regardless whether it's currently mounted.
